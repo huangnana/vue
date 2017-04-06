@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title></title>
+	<script src="vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<h2>自定义组件</h2>  
+		<!-- 在自定义标签中添加html结构时需要slot标签来混合组件模板 添加的结构会替换在组建中slot标签的位置  -->
+		<!-- 也可以使用具名slot进行结构的替换 -->
+		<custom>
+			{{massage}}  <!--使用slot替换进来的是父组件的数据 -->
+			<div slot="one">我是插入进来的html结构1</div>
+			<div slot="three">我是插入进来的html结构3</div>
+			<template slot="two">
+				<div>我是插入进来的html结构2</div>
+				<p>我是插入进来的html结构</p>
+				<a href="#">我是插进来的连接</a>
+			</template>
+		</custom>
+	</div>
+	<script>
+	Vue.component("custom",{
+		data(){
+			return{
+				massage:"我是子组件的数据"
+			}
+		},
+		template:`<div>
+			<slot>我是无名的slot</slot>
+			<slot name="one"><p>我是第一个提醒</p></slot>
+			<slot name="two"><p>我是第二个提醒</p></slot>
+			<slot name="three"><p>我是第三个提醒</p></slot>	
+			{{massage}}
+		</div>`
+	})
+	new Vue({
+		el:"#app",
+		data:{
+			massage:"我是父组件的数据"
+		}
+
+	})
+	</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title></title>
+	<script src="vue.js"></script>
+</head>
+<body>
+	<div id = "app">
+		<h2>自定义下拉菜单</h2>
+			
+		<custom-select btn-value = "查询"></custom-select>
+		<h2>自定义下拉菜单2</h2>
+		<custom-select btn-value = "搜素"></custom-select>
+	</div>
+	<script>
+	// 全局注册组件
+		// Vue.component("custom-select",{
+		// 	template:`<ul class="list">
+		// 		<li>html+css</li>
+		// 		<li>javascript</li>
+		// 		<li>html+css</li>
+		// 	</ul>`
+		// })
+		new Vue({
+			el:"#app",
+			components:{  // 局部注册
+				"custom-select":{
+					data:function(){  // 必须是函数的形式
+						return{
+							selectShow:false
+						};
+					},
+					props:["btnValue"], // 绑定自定义属性
+					template:`<div>				
+					<input type ="text" value="" @click="selectShow=!selectShow"/>
+					<input type ="button" v-bind:value="btnValue"/>
+					<ul class="list" v-show="selectShow">
+						<li>html+css</li>
+						<li>javascript</li>
+						<li>html+css</li>
+					</ul>
+					</div>`
+				}
+			}
+		})
+	</script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title></title>
+	<script src="vue.js"></script>
+</head>
+<body>
+	<div id="app">
+	<h2>父组件中的count</h2>   <!--子组件中数据发生变化，需要通过自定义事件传递给父组件
+	                            自定义事件绑定给子组件标签，自定义事件处理函数添加到父组件-->
+	<p>{{count}}</p> 
+	<custom-count :count="count" @change-click="changeParentData"></custom-count>
+	</div>
+	<script>
+	Vue.component("custom-count",{
+		data(){
+			return{
+				chlidCount:this.count  // 作为子组件的data值
+			}
+		},
+		// props 验证
+		// props:{
+		// 		count:{
+		// 			type:Number, 类型 [Number，String，Boolean]形式可以使多种
+		// 			default:10,  默认值
+		// 			required:true, 参数是否必填
+		// 			validator:function(value){  自定义验证规则
+		// 				return value>10 (value应该如何)
+		// 			}
+		// 		}
+		// }
+		props:["count"],
+		template:`<div>
+			<h2>这是一个demo</h2>
+			<input type="button" value="改变count的值" @click="changeCount" />
+			{{chlidCount2}}
+		</div>`,
+		methods:{
+			changeCount(){       // 子组件不能直接去改变父组件的值，可以通过改变子组件的data值
+				this.chlidCount++;
+				// 通知父组件这里发生不了变化
+				this.$emit("change-click"); // 触发自定义事件
+			}
+		},
+		computed:{               // 或者计算属性来改变(计算属性要根据自己的data值来变化)
+			chlidCount2(){
+				var c = this.chlidCount;
+				return c++;
+			}
+		}
+	})
+	new Vue({
+		el:"#app",
+		data:{
+			count:0
+		},
+		methods:{
+			changeParentData(){
+				this.count++;
+			}
+		}
+	})
+	</script>
+</body>
+</html>
