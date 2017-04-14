@@ -1,15 +1,30 @@
-import Vue from 'vue'
-// import App from '../App'
-import Router from 'vue-router'
-import header from '@/components/header/header'
+import Vue from 'vue';
+import Router from 'vue-router';
+import goods from '@/components/goods/goods';
+import ratings from '@/components/ratings/ratings';
+import seller from '@/components/seller/seller';
 
-Vue.use(Router)
+Vue.use(Router);
+
 
 export default new Router({
   routes: [
     {
-      path: '/',
-      components: header
+      path: '/goods',
+      component: goods
+    },
+    {
+      path: '/ratings',
+      component: ratings
+    },
+    {
+      path: '/seller',
+      component: seller
     }
   ]
-})
+});
+const router = new Router({
+  linkActiveClass: 'active',
+  // routes
+});
+router.push('/goods');
